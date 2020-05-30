@@ -25,7 +25,7 @@ save_path = 'results/'
 dataset = 'bbcsport'
 MAX_DICT_SIZE = 50000
 
-max_iter = 200
+max_iter = 3 #200
 save_frequency = max_iter
 batch = 32
 rangE = 200
@@ -33,7 +33,7 @@ lr_w = 1e+1
 lr_A = 1e+0
 lambdA = 10
 
-cv_folds = 5#5
+cv_folds = 2 #5
 results_cv = np.zeros(cv_folds)
 
 for split in range(1,cv_folds+1):
@@ -137,7 +137,7 @@ for split in range(1,cv_folds+1):
     results_cv[split-1] = err_t_cv[0]
     sio.savemat(save_path + dataset + '_results', {'results_cv':results_cv})
     
-    
+
 
 
     

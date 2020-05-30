@@ -232,8 +232,8 @@ def grad_swmd(xtr, ytr, BOW_xtr, indices_tr, xtr_center, w, A, lambdA, batch, ra
             b_sum = sum(w[idx_j] * bow_j)
             dwmd_dwi = bow_i * alpha_all[j] /a_sum - bow_i * (np.dot(alpha_all[j].T, a)/ a_sum)
             dwmd_dwj = bow_j * beta_all[j] /b_sum - bow_j * (np.dot(beta_all[j].T, b)/ b_sum)
-            dw_ii[idx_i] = dw_ii[idx_i] + cij*dwmd_dwi 
-            dw_ii[idx_j] = dw_ii[idx_j] + cij*dwmd_dwi 
+            dw_ii[idx_i] = dw_ii[idx_i] + cij*dwmd_dwi.reshape(idx_i.shape)
+            dw_ii[idx_j] = dw_ii[idx_j] + cij*dwmd_dwj[:,1]
             dA_ii = dA_ii + cij*dd_dA_all[j]
 
         if sum(np.isnan(dw_ii)) == 0 and sum(sum(np.isnan(dA_ii))) == 0:
@@ -243,8 +243,6 @@ def grad_swmd(xtr, ytr, BOW_xtr, indices_tr, xtr_center, w, A, lambdA, batch, ra
             tr_loss = tr_loss - np.log(pa)
         else:
             n_nan = n_nan + 1
-
-     
 
     batch = batch - n_nan
     if n_nan > 0:
